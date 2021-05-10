@@ -7,10 +7,9 @@ using System;
 public class UI_Tempo : MonoBehaviour
 {
    Text textComp;
-    GameManager gm;
+   GameManager gm;
 
 
-   public float timeRemaining = 60;
    void Start()
    {
        textComp = GetComponent<Text>();
@@ -19,15 +18,17 @@ public class UI_Tempo : MonoBehaviour
    
    void Update()
    {
-       if (timeRemaining > 0)
-        {
-            timeRemaining -= Time.deltaTime;
+       if (gm.gameState == GameManager.GameState.GAME)
+        {   
+            if (Math.Truncate(gm.timeRemaining) == 0) 
+            {
+                gm.ChangeState(GameManager.GameState.ENDGAME);
+            }
+            else 
+            {
+                gm.timeRemaining -= Time.deltaTime;
+            }
         }
-        else 
-        {
-            timeRemaining = 5;
-            // gm.NextLevel();
-        }
-       textComp.text = $"Restam: {Math.Truncate(timeRemaining)} s";
+       textComp.text = $"Restam: {Math.Truncate(gm.timeRemaining)} s";
    }
 }

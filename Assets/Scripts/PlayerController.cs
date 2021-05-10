@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
    void Update()
    {
+       if (gm.gameState != GameManager.GameState.GAME) { return; }
+
        float x = Input.GetAxis("Horizontal");
        float z = Input.GetAxis("Vertical");
        
@@ -104,7 +106,7 @@ public class PlayerController : MonoBehaviour
            if ((objectName == "SpaceShip") && (gm.GetPontos() == 4))
            {
                spaceShipObject.SetActive(false);
-               gm.gameFinished = true;
+               gm.spaceShipBoarded = true;
                gm.ChangeState(GameManager.GameState.ENDGAME);
            }
            Debug.Log(hit.collider.name);

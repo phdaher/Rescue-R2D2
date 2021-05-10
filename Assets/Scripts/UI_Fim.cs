@@ -13,7 +13,7 @@ public class UI_Fim : MonoBehaviour
    {
        gm = GameManager.GetInstance();
 
-       if ((gm.gameFinished) && (gm.GetPontos() == 4))
+       if ((gm.spaceShipBoarded) && (gm.GetPontos() == 4))
        {
            message.text = "Você Ganhou!!";
        }
@@ -25,7 +25,14 @@ public class UI_Fim : MonoBehaviour
 
    public void Voltar()
 {
-   gm.ChangeState(GameManager.GameState.GAME);
+       gm.KeyCaptured = false;  
+       gm.MaskCaptured = false;
+       gm.GasCaptured = false;
+       gm.R2D2Captured = false;
+       gm.R2D2Captured = false;
+       gm.spaceShipBoarded = false;
+       gm.timeRemaining = 60;
+       gm.ChangeState(GameManager.GameState.MENU);
 }
 
 

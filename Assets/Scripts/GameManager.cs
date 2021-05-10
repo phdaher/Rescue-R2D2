@@ -12,7 +12,10 @@ public class GameManager
       public bool MaskCaptured;
       public bool GasCaptured;
       public bool R2D2Captured;
-      public bool gameFinished;
+      public bool spaceShipBoarded;
+
+      public float timeRemaining;
+
 
       public delegate void ChangeStateDelegate();
       public static ChangeStateDelegate changeStateDelegate;
@@ -49,7 +52,8 @@ public void ChangeState(GameState nextState)
        GasCaptured = false;
        R2D2Captured = false;
        R2D2Captured = false;
-       gameFinished = false;
+       spaceShipBoarded = false;
+       timeRemaining = 60;
        gameState = GameState.MENU;
 
    }
