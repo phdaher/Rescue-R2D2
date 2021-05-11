@@ -17,11 +17,10 @@ public class PlayerController : MonoBehaviour
    //Utilizada para poder travar a rotação no angulo que quisermos.
    float cameraRotation;
 
-   GameObject keyObject;
-   GameObject maskObject;
-   GameObject gasObject;
-   GameObject r2d2Object;
-   GameObject spaceShipObject;
+   [SerializeField]
+   private AudioClip _captureClip = null;
+   private AudioSource _source = null;
+
 
 
    void Start()
@@ -31,18 +30,30 @@ public class PlayerController : MonoBehaviour
        cameraRotation = 0.0f;
        gm = GameManager.GetInstance();
 
-       keyObject = GameObject.Find("Key");
-       maskObject = GameObject.Find("Mask");
-       gasObject = GameObject.Find("Gas");
-       r2d2Object = GameObject.Find("R2D2");
-       spaceShipObject = GameObject.Find("SpaceShip");
-
+    _source = GetComponent<AudioSource>();
+    if (_source == null)
+    {
+        Debug.Log("Audio Source is NULL");
+    }
+    else
+    {
+        _source.clip = _captureClip;
+    }
 
    }
 
    void Update()
    {
        if (gm.gameState != GameManager.GameState.GAME) { return; }
+
+       if (gm.playerFirstUpdate) 
+       { 
+           characterController.transform.position = new Vector3(0, 1, 0);
+           // characterController.transform.rotation = new Quaternion(0, 0, 0);
+           gm.playerFirstUpdate = false;
+           return; 
+       }
+
 
        float x = Input.GetAxis("Horizontal");
        float z = Input.GetAxis("Vertical");
@@ -86,26 +97,30 @@ public class PlayerController : MonoBehaviour
            if (objectName == "Key") 
            {
                gm.KeyCaptured = true;
-               keyObject.SetActive(false);
+               gm.keyObject.SetActive(false);
+               _source.Play();
            }
            if (objectName == "Mask") 
            {
                gm.MaskCaptured = true;
-               maskObject.SetActive(false);
+               gm.maskObject.SetActive(false);
+               _source.Play();
            }
            if (objectName == "Gas")  
            {
                gm.GasCaptured = true;
-               gasObject.SetActive(false);
+               gm.gasObject.SetActive(false);
+               _source.Play();
            }
            if (objectName == "R2D2")
            {
                gm.R2D2Captured = true;
-               r2d2Object.SetActive(false);
+               gm.r2d2Object.SetActive(false);
+               _source.Play();
            }
            if ((objectName == "SpaceShip") && (gm.GetPontos() == 4))
            {
-               spaceShipObject.SetActive(false);
+               gm.spaceShipObject.SetActive(false);
                gm.spaceShipBoarded = true;
                gm.ChangeState(GameManager.GameState.ENDGAME);
            }

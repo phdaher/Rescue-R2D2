@@ -25,13 +25,7 @@ public class UI_Fim : MonoBehaviour
 
    public void Voltar()
 {
-       gm.KeyCaptured = false;  
-       gm.MaskCaptured = false;
-       gm.GasCaptured = false;
-       gm.R2D2Captured = false;
-       gm.R2D2Captured = false;
-       gm.spaceShipBoarded = false;
-       gm.timeRemaining = 60;
+       gm.Initialize();  
        gm.ChangeState(GameManager.GameState.MENU);
 }
 
